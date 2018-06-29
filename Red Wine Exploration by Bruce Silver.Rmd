@@ -1,0 +1,338 @@
+Red Wine Exploration by Bruce Silver
+========================================================
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+# Load all of the packages that you end up using
+# in your analysis in this code chunk.
+
+# Notice that the parameter "echo" was set to FALSE for this code chunk.
+# This prevents the code from displaying in the knitted HTML output.
+# You should set echo=FALSE for all code chunks in your file.
+
+library(ggplot2)
+```
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE,echo=FALSE)
+```
+
+```{r echo=FALSE, Load_the_Data}
+# Load the Data
+pf <- read.csv('wineQualityReds.csv')
+```
+
+# Univariate Plots Section
+```{r echo=FALSE, Univariate_Plots}
+names(pf)
+summary(pf)
+
+ggplot(data=pf, aes(x=sulphates)) + 
+  scale_x_continuous(limits = c(0.25, 1.5)) +
+  geom_histogram() + 
+  labs(title="Histogram of sulphates")
+```
+
+探索样本变量中sulphates的分布情况，发现sulphates呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=citric.acid)) + 
+  geom_histogram() +
+  scale_x_continuous(limits = c(0, 0.8)) +
+  labs(title="Histogram of citric acid") 
+```
+
+探索样本变量中citric.acid的分布情况，发现citric.acid不呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=alcohol)) + 
+  geom_histogram() + 
+  labs(title="Histogram of alcohol")
+```
+
+探索样本变量中alcohol的分布情况，发现alcohol的大致呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=density)) + 
+  geom_histogram() +
+  scale_x_continuous() +
+  labs(title="Histogram of density") 
+```
+
+探索样本变量中density的分布情况，发现density呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=quality)) + 
+  geom_bar() + 
+  labs(title="Histogram of quality")
+```
+
+探索样本变量中quality的分布情况，发现quality为5或6的数量最多。
+
+```{r}
+ggplot(data=pf, aes(x=fixed.acidity)) + 
+  geom_histogram() + 
+  labs(title="Histogram of fixed.acidity")
+```
+
+探索样本变量中fixed.acidity的分布情况，发现fixed.acidity呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=residual.sugar)) + 
+  geom_histogram() + 
+  scale_x_continuous(limits = c(1, 5)) + 
+  labs(title="Histogram of residual.sugar")
+```
+
+探索样本变量中residual.sugar的分布情况，发现residual.sugar呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=volatile.acidity)) + 
+  geom_histogram() + 
+  labs(title="Histogram of volatile.acidity")
+```
+
+探索样本变量中volatile.acidity的分布情况，发现volatile.acidity呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=chlorides)) + 
+  geom_histogram() + 
+  scale_x_continuous(limits = c(0, 0.2)) + 
+  labs(title="Histogram of chlorides")
+```
+
+探索样本变量中chlorides的分布情况，发现chlorides呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=free.sulfur.dioxide)) + 
+  geom_histogram() + 
+  scale_x_continuous(limits = c(0, 60)) + 
+  labs(title="Histogram of free.sulfur.dioxide")
+```
+
+探索样本变量中free.sulfur.dioxide的分布情况，发现free.sulfur.dioxide大致呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=total.sulfur.dioxide)) + 
+  geom_histogram() + 
+  labs(title="Histogram of total.sulfur.dioxide")
+```
+
+探索样本变量中total.sulfur.dioxide的分布情况，发现total.sulfur.dioxide大致呈正态分布。
+
+```{r}
+ggplot(data=pf, aes(x=pH)) + 
+  geom_histogram() + 
+  labs(title="Histogram of pH")
+```
+
+探索样本变量中pH的分布情况，发现pH呈正态分布。
+
+Our dataset consists of 13 variables with almost 1600 observations.
+
+# Univariate Analysis
+
+### What is the structure of your dataset?
+有1599个酒的样本，13个特征，我想探索citric.acid、和alcohol与quality之间的关系。
+
+### What is/are the main feature(s) of interest in your dataset?
+citric.acid和alcohol。
+
+### What other features in the dataset do you think will help support your investigation into your feature(s) of interest?
+density、sulphates或者其他变量可能也对quality有影响。
+
+### Did you create any new variables from existing variables in the dataset?
+没有。
+
+### Of the features you investigated, were there any unusual distributions? Did you perform any operations on the data to tidy, adjust, or change the form of the data? If so, why did you do this?
+Sorry.
+
+
+
+# Bivariate Plots Section
+```{r echo=FALSE, Bivariate_Plots}
+
+ggplot(pf, aes(x=factor(quality), y=citric.acid)) + 
+  geom_boxplot() + 
+  labs(title="Relationship between citric acid and quality", x='quality')
+```
+
+探索citric.acid和quality的关系，发现citric.acid与quality呈正相关。
+
+```{r}
+ggplot(pf, aes(x=factor(quality), y=density)) + 
+  geom_boxplot() + 
+  labs(title="Relationship between density and quality", x='quality')
+```
+
+探索density和quality的关系，发现density与quality呈负相关。
+
+```{r}
+
+ggplot(pf, aes(x=factor(quality), y=alcohol)) + 
+  geom_boxplot() + 
+  labs(title="Relationship between alcohol and quality", x='quality')
+```
+
+探索alcohol和quality的关系，发现alcohol与quality呈正相关。
+
+```{r}
+ggplot(pf, aes(x=factor(quality), y=sulphates)) + 
+  geom_boxplot() + 
+  labs(title="Relationship between sulphates and quality", x='quality')
+```
+
+探索sulphates和quality的关系，发现sulphates和quality呈正相关。
+
+```{r}
+ggplot(pf, aes(x=factor(quality), y=fixed.acidity)) + 
+  geom_boxplot() + 
+  labs(title="Relationship between fixed.acidity and quality", x='quality')
+```
+
+探索fixed.acidity和quality的关系，发现fixed.acidity于quality与quality不具有明显关系。
+
+```{r}
+ggplot(pf, aes(x=factor(quality), y=residual.sugar)) + 
+  geom_boxplot() + 
+  labs(title="Relationship between residual.sugar and quality", x='quality')
+```
+
+探索residual.sugar和quality的关系，发现residual.sugar不对quality造成明显影响。
+
+# Bivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
+通过箱型图，我发现citric.acid、alcohol具有相关性，citric.acid、alcohol与quality成正相关。
+
+### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
+sulphates与quality呈正相关，density和quality呈负相关。
+
+### What was the strongest relationship you found?
+我发现citric.acid与quality的关系最强。
+
+
+
+# Multivariate Plots Section
+
+```{r echo=FALSE, Multivariate_Plots}
+ggplot(aes(x = alcohol, y = citric.acid, color = factor(quality)), data = pf) +
+  geom_jitter(alpha = 0.2) +
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) +
+  labs(y = 'citric acid (g / dm^3)',x = 'alcohol (% by volume)') +
+  ggtitle("citric.acid VS alcohol VS quality")
+```
+
+探索citric.acid、alcohol和quality的关系，发现alcohol在12.6之前，提高citric.acid的浓度有助于提高quality。
+
+```{r}
+ggplot(aes(x = sulphates, y = citric.acid, color = factor(quality)), data = pf) +
+  geom_jitter(alpha = 0.2) +
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) +
+  labs(y = 'citric acid (g / dm^3)',x = 'sulphates (potassium sulphate - g / dm3)') +
+  ggtitle("citric.acid VS sulphates VS quality")
+```
+
+探索citric.acid、sulphates和quality的关系，无法得出有效结论。
+
+```{r}
+ggplot(aes(x = alcohol, y = sulphates, color = factor(quality)), data = pf) +
+  geom_jitter(alpha = 0.2) +
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) +
+  labs(y = 'sulphates (potassium sulphate - g / dm3)',x = 'alcohol (% by volume)') +
+  ggtitle("sulphates VS alcohol VS quality")
+```
+
+探索sulphates、alcohol和quality的关系，在alcohol浓度一定时，提高sulphates的浓度有助于提高quality。
+
+```{r}
+ggplot(aes(x = alcohol, y = density, color = factor(quality)), data = pf) + 
+  geom_jitter(alpha = 0.2) +
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) +
+  ylim(0.985, 1.005) + 
+  labs(y = 'density (g / cm^3)',x = 'alcohol (% by volume)') +
+  ggtitle("density VS alcohol VS quality")
+```
+
+探索density、alcohol和quality的关系，无法得出有效结论。
+
+```{r}
+ggplot(aes(x = sulphates, y = density, color = factor(quality)), data = pf) +
+  geom_jitter(alpha = 0.2) +
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) +
+  labs(y = 'density (g / cm^3)',x = 'alcohol (% by volume)') +
+  ggtitle("sulphates VS density VS quality")
+```
+
+探索density、sulphates和quality的关系，发现在alcohol一定时，降低density有助于提高quality。
+
+```{r}
+ggplot(aes(x = citric.acid, y = density, color = factor(quality)), data = pf) +
+  geom_jitter(alpha = 0.2) +
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) + 
+  labs(y = 'density (g / cm^3)',x = 'citric acid (g / dm^3)') +
+  ggtitle("citric.acid VS density VS quality")
+```
+
+探索density、citric.acid和quality的关系，发现在citric.acid小于0.625时，降低density有助于提高quality.
+
+# Multivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the investigation. Were there features that strengthened each other in terms of looking at your feature(s) of interest?
+之前呈正相关的特征变量可以发现出现在图的右上方，符合预期。
+
+### Were there any interesting or surprising interactions between features?
+sulphates与quality呈正相关。
+
+### OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.
+
+------
+
+# Final Plots and Summary
+
+### Plot One
+```{r echo=FALSE, Plot_One}
+ggplot(data=pf, aes(x=alcohol)) + 
+  geom_histogram(binwidth = 0.1) + 
+  labs(title="Histogram of alcohol", x='alcohol (% by volume)')
+```
+
+### Description One
+样本中酒精含量呈高斯分布。
+
+### Plot Two
+```{r echo=FALSE, Plot_Two}
+ggplot(pf, aes(x=factor(quality), y=citric.acid)) + 
+  geom_boxplot() + 
+  labs(x='quality (score between 0 and 10)', y='citric acid (g / dm3)') + 
+  ggtitle("Relationship between citric acid and quality")
+```
+
+### Description Two
+柠檬酸与葡萄酒质量呈正相关。
+
+### Plot Three
+```{r echo=FALSE, Plot_Three}
+ggplot(aes(x = citric.acid, y = density, color = factor(quality)), data = pf) +
+  geom_jitter() + 
+  scale_color_brewer(palette = "Blues") +
+  geom_smooth(method = "lm", se = FALSE,size=1) + 
+  labs(y = 'density (g / cm^3)',x = 'citric acid (g / dm^3)') + 
+  theme_dark() + 
+  ggtitle("citric.acid VS density VS quality")
+```
+
+### Description Three
+
+在citric.acid小于0.625时，降低density有助于提高quality.
+
+------
+
+# Reflection
+整个分析项目，主要为了得出葡萄酒里的化学成分对葡萄酒质量的影响。在分析单变量时，我主要考察了变量的分布情况；在分析双变量时，曾使用过散点图，发现不能很好地体现变量之间的关系，之后意识到quality是定序变量，决定使用箱线图（重要决定），就能很好地看出是哪些化学成分对葡萄酒的质量有影响了；在分析多变量时，也是在审阅老师的指点下，运用了渐变色和线性回归曲线来更好地看出变量之间的关系。以后我应该学会观察一下变量是连续变量还是离散变量，利用回归来体现变量的变化情况，更应该熟悉ggplot2的使用。
+
+未来工作提议：对于这个分类问题，我认为应该建立机器学习的模型来进行预测，对于features，进行样本的训练，建立一个分类模型后，就能对以后的样本进行预测了。不过由于水平还不够，无法做到这一步，不过更增加了学习机器学习的动力。
